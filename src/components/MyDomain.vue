@@ -1,6 +1,6 @@
 <template>
   <td>
-    <span>{{domain}}</span>
+    <span>{{ getTextWithoutBlankCharacters(domain) }}</span>
   </td>
   <td>
     <span 
@@ -68,6 +68,7 @@ import { ethers } from 'ethers';
 import { useEthers } from '../vue-dapp/index.esm.js';
 import { useToast, TYPE } from "vue-toastification";
 import WaitingToast from "./toasts/WaitingToast.vue";
+import { getTextWithoutBlankCharacters } from "../utils/textUtils.js";
 
 export default {
   name: "MyDomain",
@@ -95,6 +96,8 @@ export default {
   },
 
   methods: {
+    getTextWithoutBlankCharacters,
+    
     ...mapActions("user", ["fetchSelectedNameData"]),
 
     ...mapMutations("user", ["setSelectedName"]),

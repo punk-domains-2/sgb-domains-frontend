@@ -8,12 +8,19 @@
       <div class="row">
         <div class="col-md-12">
           <div class="container text-center">
-            <h3>{{domainName}}.{{tld}}</h3>
+            <h3>{{ cleanDomainName }}</h3>
 
             <img class="img-thumbnail domain-image" :src="pfpImage" />
 
             <div class="mb-3 text-center mt-4" v-if="loadingData">
               <span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span>
+            </div>
+
+            <div class="mb-3 text-center mt-4" v-if="hasTextBlankCharacters(domainName)">
+              <div class="alert alert-warning" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                Warning, this domain name contains blank characters. Proceed with caution.
+              </div>
             </div>
 
             <div class="mb-3 row domain-data mt-4" v-if="domainData">
@@ -84,8 +91,8 @@ import EditOtherData from "../components/domainEdit/EditOtherData.vue";
 import EditPfp from "../components/domainEdit/EditPfp.vue";
 import EditUrl from "../components/domainEdit/EditUrl.vue";
 import Sidebar from '../components/Sidebar.vue';
-import WaitingToast from "../components/toasts/WaitingToast.vue";
 import useChainHelpers from "../hooks/useChainHelpers";
+import { getTextWithoutBlankCharacters, hasTextBlankCharacters } from "../utils/textUtils.js";
 
 export default {
   name: "DomainDetails",
@@ -120,6 +127,10 @@ export default {
     ...mapGetters("tld", ["getTldAddress"]),
     ...mapGetters("network", ["getBlockExplorerBaseUrl", "getChainId", "getSupportedNetworks", "isNetworkSupported"]),
 
+    cleanDomainName() {
+      return this.getTextWithoutBlankCharacters(this.domainName) + "." + this.tld;
+    },
+
     holderData() {
       if (this.domainData.holder !== ethers.constants.AddressZero) {
         return this.domainData.holder;
@@ -138,6 +149,9 @@ export default {
   },
 
   methods: {
+    getTextWithoutBlankCharacters,
+    hasTextBlankCharacters,
+
     async fetchData() {
       this.loadingData = true;
 

@@ -78,6 +78,7 @@
 import { mapGetters } from 'vuex';
 import { useBoard, useEthers, useWallet } from '../vue-dapp/index.esm.js';
 import useChainHelpers from "../hooks/useChainHelpers";
+import { getTextWithoutBlankCharacters } from "../utils/textUtils.js";
 
 export default {
   name: "Navbar",
@@ -88,7 +89,7 @@ export default {
 
     getNameOrAddress() {
       if (this.getUserSelectedName) {
-        return this.getUserSelectedName;
+        return getTextWithoutBlankCharacters(this.getUserSelectedName);
       } else {
         return this.getUserShortAddress;
       }
@@ -97,6 +98,8 @@ export default {
   },
 
   methods: {
+    getTextWithoutBlankCharacters,
+
     changeNetwork(networkName) {
       const networkData = this.switchNetwork(networkName); 
 
