@@ -281,6 +281,10 @@ export default {
         this.fields.push({dataKey: "url", dataValue: "", valuePlaceholder: "Custom URL (homepage etc.)"});
       }
 
+      if(this.fields.findIndex(x => x.dataKey == "urlButtonText") === -1) {
+        this.fields.push({dataKey: "urlButtonText", dataValue: "", valuePlaceholder: "Text for the URL button"});
+      }
+
       if(this.fields.findIndex(x => x.dataKey == "twitter") === -1) {
         this.fields.push({dataKey: "twitter", dataValue: "", valuePlaceholder: "Enter your Twitter handle"});
       }
