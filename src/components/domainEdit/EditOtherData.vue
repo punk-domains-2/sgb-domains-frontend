@@ -254,19 +254,39 @@ export default {
       }
 
       if(this.fields.findIndex(x => x.dataKey == "imgAddress") === -1) {
-        this.fields.push({dataKey: "imgAddress", dataValue: "", valuePlaceholder: "HTTP, or 0x address if NFT"});
+        this.fields.push({dataKey: "imgAddress", dataValue: "", valuePlaceholder: "Image URL/link"});
       }
 
-      if(this.fields.findIndex(x => x.dataKey == "imgTokenId") === -1) {
-        this.fields.push({dataKey: "imgTokenId", dataValue: "", valuePlaceholder: "Only needed if img is NFT"});
+      if(this.fields.findIndex(x => x.dataKey == "websiteName") === -1) {
+        this.fields.push({dataKey: "websiteName", dataValue: "", valuePlaceholder: "Your website name"});
+      }
+
+      if(this.fields.findIndex(x => x.dataKey == "websiteColor") === -1) {
+        this.fields.push({dataKey: "websiteColor", dataValue: "", valuePlaceholder: "Website background color in hex"});
+      }
+
+      if(this.fields.findIndex(x => x.dataKey == "websiteDescription") === -1) {
+        this.fields.push({dataKey: "websiteDescription", dataValue: "", valuePlaceholder: "Website short description"});
+      }
+
+      if(this.fields.findIndex(x => x.dataKey == "websiteAbout") === -1) {
+        this.fields.push({dataKey: "websiteAbout", dataValue: "", valuePlaceholder: "Website About text"});
+      }
+
+      if(this.fields.findIndex(x => x.dataKey == "websitePreviewImage") === -1) {
+        this.fields.push({dataKey: "websitePreviewImage", dataValue: "", valuePlaceholder: "Link preview image"});
       }
 
       if(this.fields.findIndex(x => x.dataKey == "url") === -1) {
-        this.fields.push({dataKey: "url", dataValue: "", valuePlaceholder: "Add any URL to redirect domain to"});
+        this.fields.push({dataKey: "url", dataValue: "", valuePlaceholder: "Custom URL (homepage etc.)"});
       }
 
       if(this.fields.findIndex(x => x.dataKey == "twitter") === -1) {
         this.fields.push({dataKey: "twitter", dataValue: "", valuePlaceholder: "Enter your Twitter handle"});
+      }
+
+      if(this.fields.findIndex(x => x.dataKey == "redirect") === -1) {
+        this.fields.push({dataKey: "redirect", dataValue: "", valuePlaceholder: "Redirect URL for domain"});
       }
 
       if (this.isOwner && this.isCorrectChainForDomain) {
