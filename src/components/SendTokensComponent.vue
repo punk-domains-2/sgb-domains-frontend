@@ -162,7 +162,7 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { mapGetters } from 'vuex';
-import { useEthers } from '../vue-dapp/index.esm.js';
+import { useEthers } from 'vue-dapp';
 import { useToast, TYPE } from "vue-toastification";
 
 import Erc20Abi from "../abi/Erc20.json";

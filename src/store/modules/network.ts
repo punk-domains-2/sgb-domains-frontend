@@ -1,4 +1,4 @@
-import { useEthers } from '../../vue-dapp/index.esm.js';
+import { useEthers } from 'vue-dapp';
 import tokens from "../../abi/tokens.json";
 
 const { chainId } = useEthers();

@@ -49,7 +49,7 @@
               </ul>
             </div>
 
-            <button v-if="!isActivated" class="btn btn-primary navbar-menu-btn me-3" @click="open">Connect wallet</button>
+            <button v-if="!isActivated" class="btn btn-primary navbar-menu-btn me-3" data-bs-toggle="modal" data-bs-target="#connectModal">Connect wallet</button>
 
             <a 
               class="btn btn-primary me-3 navbar-menu-btn" 
@@ -74,9 +74,10 @@
   </nav>
 </template>
 
+
 <script lang="ts">
 import { mapGetters } from 'vuex';
-import { useBoard, useEthers, useWallet } from '../vue-dapp/index.esm.js';
+import { useBoard, useEthers, useWallet } from 'vue-dapp';
 import useChainHelpers from "../hooks/useChainHelpers";
 import { getTextWithoutBlankCharacters } from "../utils/textUtils.js";
 
@@ -98,7 +99,7 @@ export default {
   },
 
   methods: {
-    getTextWithoutBlankCharacters,
+    getTextWithoutBlankCharacters, 
 
     changeNetwork(networkName) {
       const networkData = this.switchNetwork(networkName); 
@@ -138,7 +139,7 @@ export default {
   cursor: pointer;
 }
 .navbar-brand {
-  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+  font-family: 'Figtree', Arial, Helvetica, sans-serif;
 }
 .navbar-dark .navbar-brand {
   /*color: #fff;*/

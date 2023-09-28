@@ -59,11 +59,23 @@ hr {
   border: 2px solid black;
 }
 
+.card-img-wallet:hover {
+  opacity: 0.5;
+}
+
+.card-img-wallet:active {
+  transform: scale(0.8);
+}
+
 .container {
   background: transparent;
   padding: 20px;
   border-radius: 10px;
   border: 2px solid #fff;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .img-thumbnail {
@@ -84,6 +96,11 @@ hr {
   text-decoration: underline;
 }
 
+.table > tbody > tr > td {
+  color: white;
+  background-color: transparent;
+}
+
 .Vue-Toastification__toast--info {
   background-color: #405374;
 }
@@ -94,6 +111,12 @@ hr {
 
 .Vue-Toastification__toast--error {
   background-color: #e26670;
+}
+
+.wallet-img-wrapper {
+  border-width: 2px;
+  border-color: #ffffff;
+  border-style: solid;
 }
 
 @media only screen and (max-width: 767px) {

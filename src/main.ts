@@ -8,7 +8,7 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 import Toast, { POSITION, TYPE } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import './index.css'
-import { VueDapp } from './vue-dapp/index.esm.js'
+import { VueDapp } from 'vue-dapp'
 
 const app = createApp(App);
 
@@ -32,9 +32,7 @@ const options = {
 app.use(router)
 app.use(store)
 
-app.use(VueDapp, {
-  infuraId: "not-needed-but-should-not-be-empty-either", // non-empty string for WalletConnect
-})
+app.use(VueDapp);
 
 app.use(Toast, options);
 
