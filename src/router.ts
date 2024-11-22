@@ -1,8 +1,9 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
-import Admin from './views/Admin.vue'
 import About from './views/About.vue'
+import Admin from './views/Admin.vue'
 import Allowance from './views/Allowance.vue'
+import AnotherChain from './views/AnotherChain.vue'
 import BrowserExtension from './views/BrowserExtension.vue'
 import DomainDetails from './views/DomainDetails.vue'
 import Home from './views/Home.vue'
@@ -35,6 +36,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/allowance',
     name: 'Allowance',
     component: Allowance,
+  },
+  {
+    path: '/another-chain',
+    name: 'AnotherChain',
+    component: AnotherChain,
+  },
+  {
+    path: '/data-connector',
+    name: 'AnotherChain',
+    component: AnotherChain,
   },
   {
     path: '/browser',
