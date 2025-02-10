@@ -42,11 +42,13 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AnotherChain',
     component: AnotherChain,
   },
+  /*
   {
     path: '/data-connector',
     name: 'AnotherChain',
     component: AnotherChain,
   },
+  */
   {
     path: '/browser',
     name: 'BrowserExtension',
