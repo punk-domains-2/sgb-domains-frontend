@@ -31,45 +31,19 @@
             {{ blockchain }}
           </button>
           <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton2">
-            <li class="dropdown-item" @click="blockchain='Ethereum'">Ethereum</li>
-            <li class="dropdown-item" @click="blockchain='Litecoin'">Litecoin</li>
+            <li v-for="chain in chainNames" :key="chain" class="dropdown-item" @click="blockchain=chain">{{ chain }}</li>
           </ul>
         </div>
 
-        <p class="mt-3" v-if="blockchain in prices && domainName">
-          Send {{ price }} {{ currency }} to this address: {{ address }}
+        <p class="mt-3" v-if="blockchain in this.chains && domainName">
+          Send {{ price }} {{ currency }} to this address on {{ blockchain }}: {{ recipientAddress }}
         </p>
 
         <hr class="mt-4" />
 
-        <h3 class="mt-4">Step 2: Validate payment</h3>
+        <h3 class="mt-4">Step 2: Mint domain</h3>
 
-        <p class="mt-3">Paste transaction hash here:</p>
-
-        <div class="row mt-2">
-          <div class="col-md-6 offset-md-3">
-            <input 
-              v-model="txHash"
-              class="form-control text-center border-2 border-light"
-              placeholder="Enter transaction hash"
-            >
-          </div>
-        </div>
-
-        <button 
-          class="btn btn-primary mt-3" 
-          @click="validatePayment" 
-          :disabled="waitingValidation"
-        >
-          <span v-if="waitingValidation" class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span>
-          <span>Validate payment</span>
-        </button>
-
-        <hr class="mt-4" />
-
-        <h3 class="mt-4">Step 3: Mint domain</h3>
-
-        <p class="mt-3">After your payment is validated, you can mint a domain.</p>
+        <p class="mt-3">Enter the payment transaction hash and the domain name you want to mint.</p>
 
         <div class="row mt-2">
           <div class="col-md-6 offset-md-3">
@@ -81,7 +55,16 @@
           </div>
         </div>
 
-        <div class="row mt-2">
+        <div class="btn-group mt-3">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            Paid on {{ blockchain }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton2">
+            <li v-for="chain in chainNames" :key="chain" class="dropdown-item" @click="blockchain=chain">Paid on {{ chain }}</li>
+          </ul>
+        </div>
+
+        <div class="row mt-3">
           <div class="col-md-6 offset-md-3">
             <input 
               v-model="domainName"
@@ -111,66 +94,81 @@
 
       data() {
         return {
-          addresses: {
-            "Ethereum": "0xE08033d0bDBcEbE7e619c3aE165E7957Ab577961",
-            "Litecoin": "TBD",
-          },
           blockchain: "Select blockchain",
-          currencies: {
-            "Ethereum": "ETH",
-            "Litecoin": "LTC",
+          chains: {
+            "Polygon": {
+              "chainName": "Polygon",
+              "recipientAddress": "0x6771F33Cfd8C6FC0A1766331f715f5d2E1d4E0e2",
+              "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+              "tokenSymbol": "USDT",
+              "prices": {
+                5: 1, // 5-char domain
+                4: 7, // 4-char domain
+                3: 69, // 3-char domain
+                2: 420, // 2-char domain
+                1: 1337, // 1-char domain
+              }
+            },
+            "Flare": {
+              "chainName": "Flare",
+              "recipientAddress": "0x6771F33Cfd8C6FC0A1766331f715f5d2E1d4E0e2",
+              "tokenAddress": "0x4a771cc1a39fdd8aa08b8ea51f7fd412e73b3d2b",
+              "tokenSymbol": "USDX",
+              "prices": {
+                5: 1, // 5-char domain
+                4: 7, // 4-char domain
+                3: 69, // 3-char domain
+                2: 420, // 2-char domain
+                1: 1337, // 1-char domain
+              }
+            },
           },
           domainName: "",
-          prices: {
-            "Ethereum": {
-              5: 0.001, // 5-char domain
-              4: 0.003, // 4-char domain
-              3: 0.022, // 3-char domain
-              2: 0.129, // 2-char domain
-              1: 0.49, // 1-char domain
-            },
-            "Litecoin": {
-              5: 0.02, // 5-char domain
-              4: 0.09, // 4-char domain
-              3: 0.9, // 3-char domain
-              2: 5, // 2-char domain
-              1: 15, // 1-char domain
-            }
-          },
           txHash: "",
           waitingMint: false,
-          waitingValidation: false,
         }
       },
 
       computed: {
-        address() {
-          if (this.blockchain in this.addresses) {
-            return this.addresses[this.blockchain]
-          }
-
-          return null
+        chainNames() {
+          return Object.keys(this.chains)
         },
+        
         currency() {
-          if (this.blockchain in this.currencies) {
-            return this.currencies[this.blockchain]
+          if (this.chains && this.blockchain in this.chains) {
+            return this.chains[this.blockchain].tokenSymbol
           }
 
           return null
         },
 
         price() {
-          if (this.blockchain in this.prices && this.domainName) {
-
+          if (this.chains && this.blockchain in this.chains && this.domainName) {
             if (this.domainName.length > 5) {
-              return this.prices[this.blockchain][5]
+              return this.chains[this.blockchain].prices[5]
             }
 
-            return this.prices[this.blockchain][this.domainName.length]
+            return this.chains[this.blockchain].prices[this.domainName.length]
           }
 
           return null
-        }
+        },
+
+        recipientAddress() {
+          if (this.chains && this.blockchain in this.chains) {
+            return this.chains[this.blockchain].recipientAddress
+          }
+
+          return null
+        },
+
+        tokenAddress() {
+          if (this.chains && this.blockchain in this.chains) {
+            return this.chains[this.blockchain].tokenAddress
+          }
+
+          return null
+        },
       },
 
       methods: {
@@ -181,14 +179,6 @@
 
           this.waitingMint = false
         },
-
-        validatePayment() {
-          this.waitingValidation = true
-
-          // TODO: validate payment
-
-          this.waitingValidation = false
-        }
       }
     }
   </script>
