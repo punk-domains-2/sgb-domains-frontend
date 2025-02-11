@@ -2,6 +2,10 @@
 
 Frontend for .sgb domain service powered by the [Punk Domains protocol](https://punk.domains).
 
+## Environment variables
+
+- `VITE_APP_API_BASE_URL`: The base URL of the API (for /another-chain page).
+
 ## Quickstart
 
 ```bash

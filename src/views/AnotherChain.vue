@@ -109,7 +109,7 @@ export default {
 
   data() {
     return {
-      apiBaseUrl: "http://localhost:3000", //"https://api.songbird.domains", // TODO: change to the API base URL
+      apiBaseUrl: null,
       blockchain: "Select blockchain",
       chains: {
         "Flare": {
@@ -147,6 +147,10 @@ export default {
       txHash: "",
       waitingMint: false,
     }
+  },
+
+  mounted() {
+    this.apiBaseUrl = import.meta.env.VITE_APP_API_BASE_URL
   },
 
   computed: {
