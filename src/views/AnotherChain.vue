@@ -197,6 +197,12 @@ export default {
 
   methods: {
     async mintDomain() {
+      if (!this.address) {
+        this.errorMessage = "Please connect your wallet"
+        this.waitingMint = false
+        return
+      }
+
       this.errorMessage = null
       this.successMessage = null
       this.waitingMint = true
@@ -248,6 +254,7 @@ export default {
         tx: this.txHash,
         domain: this.domainName,
         chain: chainApiCode,
+        user: this.address,
       })
 
       if (response.status === 200) {
