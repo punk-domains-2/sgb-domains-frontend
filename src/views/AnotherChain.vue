@@ -35,8 +35,10 @@
         </ul>
       </div>
 
-      <p class="mt-3" v-if="blockchain in this.chains && domainName">
-        Send {{ price }} {{ currency }} to this address on {{ blockchain }}: {{ recipientAddress }}
+      <p class="mt-3" v-if="blockchain in this?.chains && domainName">
+        Send {{ price }} 
+        <a :href="`${blockExplorerUrl}/token/${tokenAddress}`" target="_blank">{{ currency }}</a> 
+        to this address on {{ blockchain }}: {{ recipientAddress }}
       </p>
 
       <hr class="mt-4" />
@@ -112,32 +114,19 @@ export default {
       apiBaseUrl: null,
       blockchain: "Select blockchain",
       chains: {
-        "Flare": {
-          "chainApiCode": "flr",
-          "chainName": "Flare",
-          "recipientAddress": "0x6771F33Cfd8C6FC0A1766331f715f5d2E1d4E0e2",
-          "tokenAddress": "0x1D80c49BbBCd1C0911346656B529DF9E5c2F783d",
-          "tokenSymbol": "WFLR",
-          "prices": { // TODO: get prices from the API
-            5: 1, // 5-char domain
-            4: 69, // 4-char domain
-            3: 3188, // 3-char domain
-            2: 19399, // 2-char domain
-            1: 61755, // 1-char domain
-          }
-        },
         "Ethereum": {
+          "blockExplorerUrl": "https://etherscan.io/",
           "chainApiCode": "eth",
           "chainName": "Ethereum",
           "recipientAddress": "0x6771F33Cfd8C6FC0A1766331f715f5d2E1d4E0e2",
           "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenSymbol": "USDC",
-          "prices": {
-            5: 1, // 5-char domain
-            4: 7, // 4-char domain
-            3: 69, // 3-char domain
-            2: 420, // 2-char domain
-            1: 1337, // 1-char domain
+          "prices": { // prices should be static, because if they change, proof validation may fail
+            5: 2, // 5-char domain
+            4: 10, // 4-char domain
+            3: 100, // 3-char domain
+            2: 500, // 2-char domain
+            1: 2000, // 1-char domain
           }
         },
       },
@@ -151,9 +140,18 @@ export default {
 
   mounted() {
     this.apiBaseUrl = import.meta.env.VITE_APP_API_BASE_URL
+    this.fetchDomainPrices()
   },
 
   computed: {
+    blockExplorerUrl() {
+      if (this.chains && this.blockchain in this.chains) {
+        return this.chains[this.blockchain].blockExplorerUrl
+      }
+
+      return null
+    },
+
     chainNames() {
       return Object.keys(this.chains)
     },
@@ -196,6 +194,11 @@ export default {
   },
 
   methods: {
+    async fetchDomainPrices() {
+      const response = await axios.get(`${this.apiBaseUrl}/domain-prices`)
+      this.chains = response.data
+    },
+
     async mintDomain() {
       if (!this.address) {
         this.errorMessage = "Please connect your wallet"
