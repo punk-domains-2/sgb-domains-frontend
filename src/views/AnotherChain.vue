@@ -36,9 +36,7 @@
       </div>
 
       <p class="mt-3" v-if="blockchain in this?.chains && domainName">
-        Send {{ price }} 
-        <a :href="`${blockExplorerUrl}/token/${tokenAddress}`" target="_blank">{{ currency }}</a> 
-        to this address on {{ blockchain }}: {{ recipientAddress }}
+        Send {{ price }} {{ currency }} to this address on {{ blockchain }}: {{ recipientAddress }}
       </p>
 
       <hr class="mt-4" />
@@ -119,7 +117,6 @@ export default {
           "chainApiCode": "eth",
           "chainName": "Ethereum",
           "recipientAddress": "0x6771F33Cfd8C6FC0A1766331f715f5d2E1d4E0e2",
-          "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenSymbol": "USDC",
           "prices": { // prices should be static, because if they change, proof validation may fail
             5: 2, // 5-char domain
@@ -179,14 +176,6 @@ export default {
     recipientAddress() {
       if (this.chains && this.blockchain in this.chains) {
         return this.chains[this.blockchain].recipientAddress
-      }
-
-      return null
-    },
-
-    tokenAddress() {
-      if (this.chains && this.blockchain in this.chains) {
-        return this.chains[this.blockchain].tokenAddress
       }
 
       return null
