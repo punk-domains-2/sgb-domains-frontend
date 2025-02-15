@@ -35,7 +35,7 @@
         </ul>
       </div>
 
-      <p class="mt-3" v-if="blockchain in this?.chains && domainName">
+      <p class="mt-3" v-if="blockchain in chains && domainName">
         Send {{ price }} {{ currency }} to this address on {{ blockchain }}: {{ recipientAddress }}
       </p>
 
