@@ -242,21 +242,28 @@ export default {
       }
       
       // send data to the API
-      const response = await axios.post(`${this.apiBaseUrl}/verify-payment`, {
-        tx: this.txHash,
-        domain: this.domainName,
-        chain: chainApiCode,
-        user: this.address,
-      })
+      try {
+        const response = await axios.post(`${this.apiBaseUrl}/verify-payment`, {
+          tx: this.txHash,
+          domain: this.domainName,
+          chain: chainApiCode,
+          user: this.address,
+        })
 
-      if (response.status === 200) {
-        this.toast("Minting request sent!", { type: TYPE.SUCCESS });
-      } else {
-        this.toast("Minting request failed!", { type: TYPE.ERROR });
+        if (response.status === 200) {
+          this.toast("Minting request sent!", { type: TYPE.SUCCESS });
+          this.successMessage = "Minting request sent! Your domain will be minted to your wallet in a few minutes. If it doesn't show up, please contact us via Discord (link in the footer)."
+        } else {
+          this.toast("Minting request failed!", { type: TYPE.ERROR });
+          this.errorMessage = response.data.message
+        }
+      } catch (error) {
+        console.error(error)
+        this.errorMessage = `Minting request failed! ${error}`
+      } finally {
+        this.waitingMint = false
       }
 
-      this.waitingMint = false
-      this.successMessage = "Minting request sent! Your domain will be minted to your wallet in a few minutes. If it doesn't show up, please contact us via Discord (link in the footer)."
       // TODO: delete txHash and domainName from the state
     },
   },
