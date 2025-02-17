@@ -5,12 +5,6 @@
   <div class="row mt-3 text-center">
     <div class="col-md-8 offset-md-2">
 
-      <p>
-        Buy domain on another chain: <router-link to="/another-chain">temporary link here</router-link>
-      </p>
-
-      <hr />
-
       <!-- Minter: togglePaused -->
       <div v-if="isUserMinterAdmin">
         <h3 v-if="getMinterPaused">Unpause the minting contract</h3>
